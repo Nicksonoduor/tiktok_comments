@@ -27,7 +27,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12.0"
+          python-version: "3.11.9"
 
       - name: Install Android build dependencies
         run: |
@@ -52,27 +52,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           python -m pip install buildozer==1.5.0 Cython==0.29.36
-      - name: Prepare python-for-android for Python 3.12.0
-        run: |
-          git clone https://github.com/kivy/python-for-android.git python-for-android
-          cd python-for-android
-          git checkout 1c9a4b4f817847bd8505d972d1a0e6f965929a88
-          cd ..
 
-          python - <<'PY'
-          from pathlib import Path
-
-          for path in [
-              Path("python-for-android/pythonforandroid/recipes/hostpython3/__init__.py"),
-              Path("python-for-android/pythonforandroid/recipes/python3/__init__.py"),
-          ]:
-              text = path.read_text()
-              if "3.14.2" not in text:
-                  raise SystemExit(f"Could not find expected version in {path}")
-              path.write_text(text.replace("3.14.2", "3.12.0"))
-
-          print("Both Android Python recipes are set to 3.12.0")
-          PY
       - name: Build debug APK
         run: buildozer android debug
 
