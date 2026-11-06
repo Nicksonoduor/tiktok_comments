@@ -8,7 +8,7 @@ source.include_exts = py,kv,png,wav
 source.exclude_dirs = .git,.github,.buildozer,bin,__pycache__,venv,.venv
 version = 1.0
 requirements = python3==3.12.0,kivy==2.3.1,kivymd==1.2.0,requests==2.33.1
-p4a.branch = develop
+p4a.source_dir = %(source.dir)s/python-for-android
 orientation = portrait
 fullscreen = 0
 icon.filename = %(source.dir)s/icon.png
