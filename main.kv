@@ -1,0 +1,105 @@
+#:kivy 2.3.0
+
+AppScreenManager:
+    id: screen_manager
+
+    # SCREEN 1: Home / UI Navigation
+    MDScreen:
+        name: "home"
+        
+        MDBottomNavigation:
+            panel_color: app.theme_cls.bg_dark
+
+            # Home Tab
+            MDBottomNavigationItem:
+                name: 'screen 1'
+                text: 'Home'
+                icon: 'home'
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    padding: "24dp"
+                    spacing: "24dp"
+
+                    MDLabel:
+                        text: "TikTok Comment Downloader"
+                        font_style: "H5"
+                        halign: "center"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    MDTextField:
+                        id: url_input
+                        hint_text: "Input Video ID or Link"
+                        mode: "rectangle"
+                        icon_right: "link"
+
+                    MDRaisedButton:
+                        text: "INITIALIZE DOWNLOAD"
+                        pos_hint: {"center_x": .5}
+                        size_hint_x: 0.8
+                        md_bg_color: app.theme_cls.primary_color
+                        on_release: app.start_download()
+
+
+                    Widget: # Spacer
+
+            # SCREEN 5: Saved Files Tab
+            MDBottomNavigationItem:
+                name: 'screen 5'
+                text: 'Files'
+                icon: 'folder'
+
+                MDScrollView:
+                    MDList:
+                        id: file_list
+                        MDLabel:
+                            text: "Files will appear here"
+                            halign: "center"
+                            padding_y: "30dp"
+
+            # SCREEN 6: App Info Tab
+            MDBottomNavigationItem:
+                name: 'screen 6'
+                text: 'Info'
+                icon: 'information'
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "24dp"
+                    MDLabel:
+                        text: "Developer Appreciation\n\n Shout Out Credits to \n Nickson Oduor\n and \n  Gemini AI \n App Version 1.0\n\nEnjoy the App features!"
+                        halign: "center"
+
+    # SCREEN 3: Downloading / Errors
+    MDScreen:
+        name: "downloading"
+        
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: "48dp"
+            spacing: "32dp"
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+            MDSpinner:
+                id: spinner
+                size_hint: None, None
+                size: dp(60), dp(60)
+                pos_hint: {'center_x': .5}
+                active: True
+                palette: [ [0.8, 0, 0, 1], [0, 0.8, 0.8, 1], [0, 0, 0, 1] ] # Changing colors
+
+            MDLabel:
+                id: status_label
+                text: "Starting..."
+                halign: "center"
+                font_style: "Subtitle1"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+
+            MDRaisedButton:
+                id: cancel_btn
+                text: "CANCEL"
+                pos_hint: {"center_x": .5}
+                md_bg_color: app.theme_cls.error_color
+                on_release: app.cancel_download()
